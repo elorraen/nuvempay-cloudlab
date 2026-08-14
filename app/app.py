@@ -73,3 +73,7 @@ if __name__ == "__main__":
     # host 0.0.0.0 é necessário para o container aceitar conexões
     # de fora dele (não só de dentro do próprio container).
     app.run(host="0.0.0.0", port=8080)
+if __name__ == "__main__":
+    # host 0.0.0.0 é necessário para o container aceitar conexões
+    # de fora dele (não só de dentro do próprio container).
+    app.run(host="0.0.0.0", port=8080)
