@@ -5,6 +5,16 @@ from datetime import datetime, timezone
 
 from flask import Flask, jsonify, request
 
+def add_cors_headers(response):
+    # Libera chamadas vindas do navegador (ex: o painel NuvemPay em HTML/JS)
+    # para esta API. Como é um projeto acadêmico de demonstração, liberamos
+    # qualquer origem ("*") — em um cenário real, isso seria restrito ao
+    # domínio específico do frontend.
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
+
 # Logs estruturados na saída padrão (stdout) — é isso que o CloudWatch
 # vai coletar automaticamente quando o container rodar no ECS/Fargate.
 logging.basicConfig(
@@ -15,6 +25,7 @@ logging.basicConfig(
 logger = logging.getLogger("nuvempay")
 
 app = Flask(__name__)
+app.after_request(add_cors_headers)
 
 SERVICE_NAME = "nuvempay"
 SERVICE_VERSION = "1.0.0"
